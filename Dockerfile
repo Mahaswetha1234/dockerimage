@@ -1,8 +1,13 @@
-FROM ubuntu:18.04
+# Use the official Nginx base image
+FROM nginx:latest
 
-RUN apt-get update && apt-get -y install apache2
-COPY index.html /src
+# Copy the HTML files to the container's web root directory
+COPY sample_website /usr/share/nginx/html
+
+# Expose port 80 to allow incoming traffic
 EXPOSE 80
-ENTRYPOINT [ "/usr/sbin/apachet1" ]
-CMD [ "-D","FOREGROUND" ]
+
+# Command to start the Nginx server when the container runs
+CMD ["nginx", "-g", "daemon off;"]
+
 
