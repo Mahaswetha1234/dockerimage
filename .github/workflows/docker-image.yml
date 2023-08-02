@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
     
 env:
-   image_name:sampleimage
+   IMAGE_NAME: sampleimage
 
 jobs:
 
@@ -20,12 +20,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build . -t ${{env.image_name}}:latest
+        run: docker build . -t ${{env.IMAGE_NAME}}:latest
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image to Registry
         run: |
-          docker tag ${{env.image_name}} ${{ secrets.DOCKER_USERNAME }}/${{env.image_name}}
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{env.image_name}}
+          docker tag ${{env.IMAGE_NAME}} ${{ secrets.DOCKER_USERNAME }}/${{env.IMAGE_NAME}}
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{env.IMAGE_NAME}}
