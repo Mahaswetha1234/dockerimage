@@ -24,7 +24,7 @@ jobs:
       - id: tagging
         name: tagging
         run: |
-          export TAG=$(date '+%Y%m%d%H%M%S')
+          export TAG=$(date '+%Y%m%d%H%M%S')+${{ github.sha }}
           echo "export TAG=$(echo $TAG)"  >> variables
           echo ::set-output name=action_tag::$TAG
 
@@ -36,7 +36,6 @@ jobs:
           push: true
           tags: |
             ${{env.USER_NAME}}/${{env.REPO_NAME}}:latest
-            ${{env.USER_NAME}}/${{env.REPO_NAME}}:${{ github.sha }}
             ${{env.USER_NAME}}/${{env.REPO_NAME}}:${{steps.tagging.outputs.action_tag}}
             
 
