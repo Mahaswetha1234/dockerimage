@@ -24,7 +24,7 @@ jobs:
       - id: tagging
         name: tagging
         run: |
-          export TAG=$(date '+%Y%m%d%H%M%S')+${{ github.sha }}
+          export TAG=$(date '+%Y%m%d%H%M%S')
           echo "export TAG=$(echo $TAG)"  >> variables
           echo ::set-output name=action_tag::$TAG
 
