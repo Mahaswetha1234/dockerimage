@@ -1,31 +1,32 @@
-name: Docker Image CI
-
+name: Docker Build and Push
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-    
-env:
-   IMAGE_NAME: sampleimage
+    branches:
+      - main # Update this to match your default branch name if different
 
 jobs:
-
-  build:
-
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build Docker image
-        run: docker build . -t ${{env.IMAGE_NAME}}:latest
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and Push Docker Image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: . # Path to the directory containing Dockerfile
+          push: true
+          tags: |
+            swethachirla22/samplehtml:latest
+            swethachirla22/samplehtml:${{ github.sha }}
+            swethachirla22/samplehtml:${{ env.IMAGE_VERSION }}
+        env:
+          IMAGE_VERSION: ${{ format('{0}-{1}', github.run_id, formatTime(now(), 'yyyyMMddHHmmss')) }}
 
-      - name: Push Docker image to Registry
-        run: |
-          docker tag ${{env.IMAGE_NAME}} ${{ secrets.DOCKER_USERNAME }}/${{env.IMAGE_NAME}}
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{env.IMAGE_NAME}}
