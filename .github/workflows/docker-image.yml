@@ -27,6 +27,5 @@ jobs:
           tags: |
             swethachirla22/samplehtml:latest
             swethachirla22/samplehtml:${{ github.sha }}
-            swethachirla22/samplehtml:${{ format('{0}-{1}', github.run_id, formatTime(now(), 'yyyyMMddHHmmss')) }}
-
+            
 
