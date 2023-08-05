@@ -7,7 +7,7 @@ on:
 env:
   USER_NAME: swethachirla22
   REPO_NAME: samplehtml
-  IMAGE_ID: $(date +'%Y%m%d%H%M%S')-${{ github.run_id }} 
+  IMAGE_ID: ${{ format(now(), 'yyyy-MM-dd HH:mm:ss') }}
 
 jobs:
   build-and-push:
