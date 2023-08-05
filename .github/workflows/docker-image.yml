@@ -1,8 +1,9 @@
 name: Docker Build and Push
 on:
   push:
-    branches:
-      - main # Update this to match your default branch name if different
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-and-push:
