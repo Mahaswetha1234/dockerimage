@@ -4,6 +4,10 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+env:
+  USER_NAME: swethachirla22
+  REPO_NAME: samplehtml
+  IMAGE_ID: $(date +'%Y%m%d%H%M%S')-${{ github.run_id }} 
 
 jobs:
   build-and-push:
@@ -25,8 +29,8 @@ jobs:
           context: . # Path to the directory containing Dockerfile
           push: true
           tags: |
-            swethachirla22/samplehtml:latest
-            swethachirla22/samplehtml:${{ github.sha }}
-            swethachirla22/samplehtml:${{ format('{0}-{1}', github.run_id, formatTime(now(), 'yyyyMMddHHmmss')) }}
+            ${{env.USER_NAME}}/${{env.REPO_NAME}}:latest
+            ${{env.USER_NAME}}/${{env.REPO_NAME}}:${{ github.sha }}
+            ${{env.USER_NAME}}/${{env.REPO_NAME}}:${{ env.IMAGE_ID }}
             
 
